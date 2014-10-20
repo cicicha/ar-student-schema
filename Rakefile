@@ -2,7 +2,8 @@ require 'rake'
 require 'rspec/core/rake_task'
 require_relative 'db/config'
 require_relative 'lib/students_importer'
-
+require_relative 'lib/teachers_importer'
+require_relative 'lib/subjects_importer'
 
 desc "create the database"
 task "db:create" do
@@ -31,6 +32,16 @@ end
 desc 'Retrieves the current schema version number'
 task "db:version" do
   puts "Current version: #{ActiveRecord::Migrator.current_version}"
+end
+
+desc 'populate the teacher table with sample data'
+task "db:seed_teacher" do
+  TeachersImporter.import
+end
+
+desc 'populate the subject table with sample data'
+task "db:seed_subject" do
+  SubjectsImporter.import
 end
 
 desc "Run the specs"
